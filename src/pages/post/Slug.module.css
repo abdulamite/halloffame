@@ -1,0 +1,64 @@
+.banner {
+    width: 100%;
+    height: 300px;
+    background-color: #333;
+    object-fit: cover;
+}
+
+@media only screen and (max-width: 600px) {
+    .banner {
+        height: 150px;
+    }
+}
+
+.blogPostTitle {
+    font-size: 2.5em;
+    font-weight: 700;
+    color: #333;
+    width: auto;
+    margin: .5rem auto;
+
+}
+
+.postContent {
+    max-width: 800px;
+    font-family: "Times New Roman", serif;
+    font-size: 1.2em;
+    line-height: 1.5em;
+    padding: 0 1em;
+}
+
+.postContent p:first-of-type:first-letter {
+    font-size: 1.85em;
+    font-weight: 700;
+    float: left;
+    margin: 0 0.1em 0 0;
+    line-height: 0.8em;
+}
+
+.postContentContainer {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    padding: 0 1em;
+    align-items: center;
+}
+
+.postTagChipsContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 1em 0;
+    list-style: none;
+    padding: 0;
+
+}
+
+.postTagChips {
+    margin: 0 0.5em 0.5em 0;
+    background-color: #333;
+    color: #fff;
+    padding: 0.5em 1em;
+    border-radius: 0.5em;
+}
