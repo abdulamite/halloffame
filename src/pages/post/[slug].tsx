@@ -117,7 +117,6 @@ const googleMapsPreviewImage = (post: BlogPost) => {
 };
 
 const aboutTheLocationCard = (post: BlogPost) => {
-  console.log();
   const splitAddress = post.address.split(",");
   return (
     <div className={styles.aboutTheLocationCard}>
@@ -160,6 +159,7 @@ const aboutTheLocationCard = (post: BlogPost) => {
 };
 
 const Blog = ({ post }: Props) => {
+  console.log(post);
   return (
     <div>
       <div className={styles.bannerContainer}>
@@ -181,7 +181,9 @@ const Blog = ({ post }: Props) => {
           <div>{post.body}</div>
           <div>{post.content.map(renderBlock)}</div>
         </div>
-        {aboutTheLocationCard(post)}
+        {post.website && post.address && post.date
+          ? aboutTheLocationCard(post)
+          : null}
       </article>
     </div>
   );
