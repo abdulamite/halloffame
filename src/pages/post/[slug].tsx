@@ -104,14 +104,70 @@ const renderBlock = (block: Block) => {
   }
 };
 
+const googleMapsPreviewImage = (post: BlogPost) => {
+  const splitAddress = post.address.split(",");
+  const address = splitAddress.join("+");
+  return (
+    <img
+      className={styles.googleMapsPreviewImage}
+      src={`https://maps.googleapis.com/maps/api/staticmap?center=${address}&zoom=12&size=200x250&maptype=roadmap&markers=color:red%7Clabel:A%7C${address}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`}
+      alt="Location Map"
+    />
+  );
+};
+
+const aboutTheLocationCard = (post: BlogPost) => {
+  console.log();
+  const splitAddress = post.address.split(",");
+  return (
+    <div className={styles.aboutTheLocationCard}>
+      <h3>About the Location</h3>
+      <div className={styles.aboutTheLocationCardContent}>
+        <div className={styles.aboutTheLocationCardMap}>
+          {googleMapsPreviewImage(post)}
+        </div>
+        <div className="aboutTheLocationCardCardContentContainer">
+          <div className={styles.aboutTheLocationCardVisitedAtContianer}>
+            <span className={styles.aboutTheLocationCardVisitedAtLabel}>
+              Visited On
+            </span>
+            <span className={styles.aboutTheLocationCardVisitedAt}>
+              {convertDate(post.date)}
+            </span>
+          </div>
+          <div className={styles.aboutTheLocationCardAddressContainer}>
+            <span className={styles.aboutTheLocationCardAddressLabel}>
+              Address
+            </span>
+            {splitAddress.map((address, index) => (
+              <span className={styles.aboutTheLocationCardAddress} key={index}>
+                {address}
+              </span>
+            ))}
+          </div>
+          <div className={styles.aboutTheLocationCardWebsiteContainer}>
+            <span className={styles.aboutTheLocationCardWebsiteLabel}>
+              Website
+            </span>
+            <span className={styles.aboutTheLocationCardWebsite}>
+              <a href={post.website}>{post.website}</a>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Blog = ({ post }: Props) => {
-  console.log(post);
   return (
     <div>
-      <img className={styles.banner} src={urlFor(post.banner).url()} alt="" />
+      <div className={styles.bannerContainer}>
+        <img className={styles.banner} src={urlFor(post.banner).url()} alt="" />
+      </div>
       <article className={styles.postContentContainer}>
         <h2 className={styles.blogPostTitle}>{post.title}</h2>
-        <div className="postDate">
+        <div className={styles._createdAt}>
           <span>{convertDate(post.date)}</span>
         </div>
         <ul className={styles.postTagChipsContainer}>
@@ -125,6 +181,7 @@ const Blog = ({ post }: Props) => {
           <div>{post.body}</div>
           <div>{post.content.map(renderBlock)}</div>
         </div>
+        {aboutTheLocationCard(post)}
       </article>
     </div>
   );

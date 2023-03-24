@@ -1,11 +1,35 @@
-import { Inter } from "next/font/google";
+import client from "../../client";
 
-const inter = Inter({ subsets: ["latin"] });
+type Props = {
+  posts: any;
+};
 
-export default function Home() {
+export const getStaticProps = async () => {
+  const query = `*[_type == "post"] {
+        slug,
+    }
+    `;
+  const posts = await client.fetch(query);
+  return {
+    props: {
+      posts,
+    },
+  };
+};
+
+export default function Home({ posts }: Props) {
+  console.log(posts);
   return (
     <>
-      <main></main>
+      <main>
+        <ul>
+          {posts.map((post: any) => (
+            <li key={post.slug.current}>
+              <a href={`/post/${post.slug.current}`}>{post.slug.current}</a>
+            </li>
+          ))}
+        </ul>
+      </main>
     </>
   );
 }
