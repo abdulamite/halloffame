@@ -167,8 +167,8 @@ const Blog = ({ post }: Props) => {
       </div>
       <article className={styles.postContentContainer}>
         <h2 className={styles.blogPostTitle}>{post.title}</h2>
-        <div className={styles._createdAt}>
-          <span>{convertDate(post.date)}</span>
+        <div className={styles.postDate}>
+          <span>{convertDate(post._createdAt)}</span>
         </div>
         <ul className={styles.postTagChipsContainer}>
           {post.tags.map((tag) => (
