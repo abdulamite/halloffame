@@ -120,7 +120,7 @@ const aboutTheLocationCard = (post: BlogPost) => {
   const splitAddress = post.address.split(",");
   return (
     <div className={styles.aboutTheLocationCard}>
-      <h3>About the Location</h3>
+      <h3>About this location:</h3>
       <div className={styles.aboutTheLocationCardContent}>
         <div className={styles.aboutTheLocationCardMap}>
           {googleMapsPreviewImage(post)}
