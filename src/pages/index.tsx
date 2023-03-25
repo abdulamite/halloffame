@@ -22,6 +22,7 @@ export default function Home({ posts }: Props) {
   return (
     <>
       <main>
+        <h1>Some content here for PR</h1>
         <ul>
           {posts.map((post: any) => (
             <li key={post.slug.current}>
