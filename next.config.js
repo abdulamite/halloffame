@@ -1,9 +1,5 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
+module.exports = {
   images: {
-    domains: ["cdn.sanity.io"],
+    domains: ["maps.googleapis.com", "cdn.sanity.io"],
   },
 };
-
-module.exports = nextConfig;

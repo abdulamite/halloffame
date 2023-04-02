@@ -2,13 +2,12 @@ import { GetStaticProps, GetStaticPaths } from "next";
 import imageURLBuilder from "@sanity/image-url";
 import client from "../../../client";
 import Image from "next/image";
-import styles from "./Slug.module.css";
 
 type BlogPost = {
   banner: string;
   title: string;
   slug: string;
-  body: string;
+  description: string;
   tags: string[];
   content: any;
   _createdAt: string;
@@ -40,6 +39,7 @@ export const getStaticProps: GetStaticProps<Props, { slug: string }> = async ({
     *[_type == "post" && slug.current == $slug][0] {
       _createdAt,
       title,
+      description,
       banner,
       slug,
       tags,
@@ -88,15 +88,18 @@ const renderBlock = (block: Block) => {
   switch (block._type) {
     case "block":
       return (
-        <p>{block.children.map((span: { text: any }) => span.text).join("")}</p>
+        <p className="max-w-800px font-serif text-lg leading-6 px-4 mb-2">
+          {block.children.map((span: any) => span.text).join("")}
+        </p>
       );
     case "image":
-      console.log(urlFor(block.asset._ref).width(400).url());
       return (
-        <img
-          className={styles.banner}
-          src={urlFor(block.asset._ref).width(400).url()}
-          alt="something"
+        <Image
+          className="w-full h-300 bg-gray-800 object-cover"
+          src={urlFor(block.asset._ref).url()}
+          width={400}
+          height={300}
+          alt="inline-image"
         />
       );
     default:
@@ -104,52 +107,47 @@ const renderBlock = (block: Block) => {
   }
 };
 
-const googleMapsPreviewImage = (post: BlogPost) => {
-  const splitAddress = post.address.split(",");
+const googleMapsPreviewImage = (locationAddress: string) => {
+  const splitAddress = locationAddress.split(",");
   const address = splitAddress.join("+");
   return (
-    <img
-      className={styles.googleMapsPreviewImage}
-      src={`https://maps.googleapis.com/maps/api/staticmap?center=${address}&zoom=12&size=200x250&maptype=roadmap&markers=color:red%7Clabel:A%7C${address}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`}
-      alt="Location Map"
-    />
+    <div className="h-40 relative">
+      <Image
+        src={`https://maps.googleapis.com/maps/api/staticmap?center=${address}&zoom=15&size=1200x1200&scale=2&maptype=roadmap&markers=color:red%7Clabel:A%7C${address}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`}
+        alt="Location Map"
+        fill
+        className="static object-cover"
+      />
+    </div>
   );
 };
 
 const aboutTheLocationCard = (post: BlogPost) => {
   const splitAddress = post.address.split(",");
   return (
-    <div className={styles.aboutTheLocationCard}>
-      <h3>About this location:</h3>
-      <div className={styles.aboutTheLocationCardContent}>
-        <div className={styles.aboutTheLocationCardMap}>
-          {googleMapsPreviewImage(post)}
-        </div>
-        <div className="aboutTheLocationCardCardContentContainer">
-          <div className={styles.aboutTheLocationCardVisitedAtContianer}>
-            <span className={styles.aboutTheLocationCardVisitedAtLabel}>
-              Visited On
-            </span>
-            <span className={styles.aboutTheLocationCardVisitedAt}>
-              {convertDate(post.date)}
-            </span>
+    <div className="p-2 bg-slate-50">
+      <h3 className="text-2xl font-bold mb-2">About this location:</h3>
+      <div className="">
+        {googleMapsPreviewImage(post.address)}
+        <div className="my-2">
+          <div className="mb-4">
+            <span className="font-bold mr-1">Visited On:</span>
+            <span className="">{convertDate(post.date)}</span>
           </div>
-          <div className={styles.aboutTheLocationCardAddressContainer}>
-            <span className={styles.aboutTheLocationCardAddressLabel}>
-              Address
-            </span>
-            {splitAddress.map((address, index) => (
-              <span className={styles.aboutTheLocationCardAddress} key={index}>
+          <div className="mb-4">
+            <span className="font-bold mr-1">Address:</span>
+            {splitAddress.map((address: string, index: number) => (
+              <span className="" key={index}>
                 {address}
               </span>
             ))}
           </div>
-          <div className={styles.aboutTheLocationCardWebsiteContainer}>
-            <span className={styles.aboutTheLocationCardWebsiteLabel}>
-              Website
-            </span>
-            <span className={styles.aboutTheLocationCardWebsite}>
-              <a href={post.website}>{post.website}</a>
+          <div className="">
+            <span className="font-bold mr-1">Website:</span>
+            <span className="">
+              <a className="underline" href={post.website}>
+                {post.website}
+              </a>
             </span>
           </div>
         </div>
@@ -158,30 +156,47 @@ const aboutTheLocationCard = (post: BlogPost) => {
   );
 };
 
-const Blog = ({ post }: Props) => {
+const postTags = (tags: string[]) => {
+  return (
+    <ul className="flex flex-wrap justify-center my-6 w-full">
+      {tags.map((tag) => (
+        <li
+          className="bg-gray-400 text-white hover:bg-gray-600 font-bold  py-1 px-4 text-sm mr-2 mb-2"
+          key={tag}
+        >
+          {tag}
+        </li>
+      ))}
+    </ul>
+  );
+};
+
+const Post = ({ post }: Props) => {
   console.log(post);
   return (
     <div>
-      <div className={styles.bannerContainer}>
-        <img className={styles.banner} src={urlFor(post.banner).url()} alt="" />
+      <div className="w-full h-200 bg-gray-800 object-cover m-h-50">
+        <Image
+          className="w-full max-h-80 bg-gray-800 object-cover"
+          src={urlFor(post.banner).url()}
+          alt="banner image"
+          width={1200}
+          height={200}
+          priority
+        />
       </div>
-      <article className={styles.postContentContainer}>
-        <h2 className={styles.blogPostTitle}>{post.title}</h2>
-        <div className={styles.postDate}>
+      <article className="max-w-5xl sm:w-11/12 mx-auto mt-8 px-4">
+        <h1 className="text-4xl font-bold text-center mb-4">{post.title}</h1>
+        <p className="text-center text-gray-500 mb-4">{post.description}</p>
+        <div className="text-center text-gray-500 mb-4 italic">
           <span>{convertDate(post._createdAt)}</span>
         </div>
-        <ul className={styles.postTagChipsContainer}>
-          {post.tags.map((tag) => (
-            <li className={styles.postTagChips} key={tag}>
-              {tag}
-            </li>
-          ))}
-        </ul>
-        <div className={styles.postContent}>
-          <div>{post.body}</div>
-          <div>{post.content.map(renderBlock)}</div>
+
+        <div className="text-gray-700">
+          <div>{post.content.map((block: Block) => renderBlock(block))}</div>
         </div>
-        {post.website && post.address && post.date
+        {postTags(post.tags)}
+        {post.address && post.website && post.date
           ? aboutTheLocationCard(post)
           : null}
       </article>
@@ -189,4 +204,4 @@ const Blog = ({ post }: Props) => {
   );
 };
 
-export default Blog;
+export default Post;

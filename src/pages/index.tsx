@@ -18,7 +18,6 @@ export const getStaticProps = async () => {
 };
 
 export default function Home({ posts }: Props) {
-  console.log(posts);
   return (
     <>
       <main>
