@@ -39,19 +39,19 @@ export default function Navbar(): JSX.Element {
             <div className="ml-4 flex items-center md:ml-6">
               <Link
                 href="/locations"
-                className="px-3 py-2 rounded-md text-sm font-medium text-gray-500  hover:text-blue-500 "
+                className="px-3 py-2 rounded-md text-sm font-medium text-gray-500  hover:text-orange-700 "
               >
                 Locations
               </Link>
               <Link
                 href="/about"
-                className="px-3 py-2 rounded-md text-sm font-medium text-gray-500  hover:text-blue-500 "
+                className="px-3 py-2 rounded-md text-sm font-medium text-gray-500  hover:text-orange-700 "
               >
                 About
               </Link>
               <Link
                 href="/contact"
-                className="px-3 py-2 rounded-md text-sm font-medium text-gray-500  hover:text-blue-500 "
+                className="px-3 py-2 rounded-md text-sm font-medium text-gray-500  hover:text-orange-700 "
               >
                 Contact
               </Link>
@@ -69,19 +69,19 @@ export default function Navbar(): JSX.Element {
         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
           <Link
             href="/locations"
-            className="text-gray-500  hover:text-blue-500 block px-3 py-2 rounded-md text-base font-medium"
+            className="text-gray-500  hover:text-orange-700 block px-3 py-2 rounded-md text-base font-medium"
           >
             Locations
           </Link>
           <Link
             href="/about"
-            className="text-gray-500  hover:text-blue-500 block px-3 py-2 rounded-md text-base font-medium"
+            className="text-gray-500  hover:text-orange-700 block px-3 py-2 rounded-md text-base font-medium"
           >
             About
           </Link>
           <Link
             href="/contact"
-            className="text-gray-500  hover:text-blue-500 block px-3 py-2 rounded-md text-base font-medium"
+            className="text-gray-500  hover:text-orange-700 block px-3 py-2 rounded-md text-base font-medium"
           >
             Contact
           </Link>

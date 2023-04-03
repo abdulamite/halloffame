@@ -166,7 +166,7 @@ const postTags = (tags: string[]) => {
     <ul className="flex flex-wrap justify-center my-6 w-full">
       {tags.map((tag) => (
         <li
-          className="bg-gray-400 text-white hover:bg-gray-600 font-bold  py-1 px-4 text-sm mr-2 mb-2"
+          className="bg-orange-600 text-white hover:bg-orange-800 font-bold  py-1 px-4 text-sm mr-2 mb-2"
           key={tag}
         >
           {tag}
@@ -191,8 +191,7 @@ const Post = ({ post }: Props) => {
       </div>
       <article className="max-w-5xl sm:w-11/12 mx-auto mt-8 px-4">
         <h1 className="text-4xl font-bold text-center mb-4">{post.title}</h1>
-        <p className="text-center text-gray-500 mb-4">{post.description}</p>
-        <div className="text-center text-gray-500 mb-4 italic">
+        <div className="text-center text-gray-500 mb-4 italic text-orange-800">
           <span>{convertDate(post._createdAt)}</span>
         </div>
 
