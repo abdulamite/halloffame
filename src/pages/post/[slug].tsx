@@ -17,6 +17,7 @@ type BlogPost = {
 };
 
 type Block = {
+  _key: string;
   _type: string;
   children: any;
   asset: any;
@@ -88,7 +89,10 @@ const renderBlock = (block: Block) => {
   switch (block._type) {
     case "block":
       return (
-        <p className="max-w-800px font-serif text-lg leading-6 px-4 mb-2">
+        <p
+          className="max-w-800px font-serif text-lg leading-6 px-4 mb-2"
+          key={block._key}
+        >
           {block.children.map((span: any) => span.text).join("")}
         </p>
       );
@@ -100,6 +104,7 @@ const renderBlock = (block: Block) => {
           width={400}
           height={300}
           alt="inline-image"
+          key={block._key}
         />
       );
     default:
@@ -125,7 +130,7 @@ const googleMapsPreviewImage = (locationAddress: string) => {
 const aboutTheLocationCard = (post: BlogPost) => {
   const splitAddress = post.address.split(",");
   return (
-    <div className="p-2 bg-slate-50">
+    <div className="p-2 bg-slate-50 lg:max-w-lg lg:m-auto">
       <h3 className="text-2xl font-bold mb-2">About this location:</h3>
       <div className="">
         {googleMapsPreviewImage(post.address)}
@@ -172,7 +177,6 @@ const postTags = (tags: string[]) => {
 };
 
 const Post = ({ post }: Props) => {
-  console.log(post);
   return (
     <div>
       <div className="w-full h-200 bg-gray-800 object-cover m-h-50">

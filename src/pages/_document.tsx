@@ -7,10 +7,8 @@ export default function Document() {
     <Html lang="en">
       <Head />
       <body>
-        <Navbar />
         <Main />
         <NextScript />
-        <Footer />
       </body>
     </Html>
   );
